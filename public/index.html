@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTERO — CREATE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--paper:#f4ecd8;--paper-2:#ece2c5;--yellow:#ffd23f;--red:#ff4d3d;--green:#2ecc71;--border:3px solid var(--ink);--shadow:6px 6px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);color:var(--ink);font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;background-image:repeating-linear-gradient(0deg,var(--ink) 0 1px,transparent 1px 3px);z-index:0}
+.topbar,.grid,.footbar{position:relative;z-index:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:var(--border);background:var(--yellow)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{display:inline-grid;place-items:center;width:36px;height:36px;background:var(--ink);color:var(--yellow);font-weight:900;border:var(--border);box-shadow:var(--shadow-sm);font-family:"Archivo Black",ui-sans-serif;font-size:20px}
+.brand-name{font-weight:900;letter-spacing:-.02em;font-size:22px;text-transform:uppercase}
+.brand-dot{color:var(--red)}
+.topbar-meta{display:flex;align-items:center;gap:10px}
+.pill{background:var(--ink);color:var(--paper);padding:6px 12px;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:var(--border);box-shadow:var(--shadow-sm)}
+.btn-mini{background:var(--paper);color:var(--ink);border:var(--border);box-shadow:var(--shadow-sm);padding:6px 12px;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:transform .06s ease,box-shadow .06s ease}
+.btn-mini:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-mini:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{width:100%;background:var(--red);color:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:14px 18px;font-weight:900;font-size:16px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .06s ease,box-shadow .06s ease;font-family:inherit}
+.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+.btn-primary:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn-primary:disabled{background:#999;cursor:not-allowed;transform:none;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:24px;padding:28px 24px;max-width:1280px;margin:0 auto}
+.card-form{grid-column:1;grid-row:1/span 2}
+.card-output{grid-column:2;grid-row:1}
+.card-inbox{grid-column:2;grid-row:2}
+@media(max-width:900px){.grid{grid-template-columns:1fr;grid-template-rows:none}.card-form,.card-output,.card-inbox{grid-column:1;grid-row:auto}}
+.card{background:var(--paper-2);border:var(--border);box-shadow:var(--shadow);padding:22px}
+.card-title{font-family:"Archivo Black",ui-sans-serif;font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;border-bottom:var(--border)}
+.field{display:block;margin-bottom:18px}
+.field>span{display:block;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.field input[type=text],.field input[type=number]{width:100%;padding:12px 14px;background:var(--paper);border:var(--border);font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);outline:none;box-shadow:var(--shadow-sm)}
+.field input:focus{background:var(--yellow)}
+.segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:var(--border);box-shadow:var(--shadow-sm)}
+.seg{padding:12px 8px;background:var(--paper);border:none;border-right:var(--border);font-family:inherit;font-weight:800;font-size:12px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase}
+.seg:last-child{border-right:none}
+.seg.active{background:var(--ink);color:var(--yellow)}
+.seg:hover:not(.active){background:var(--paper-2)}
+.check{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--red)}
+.output-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.output-head .card-title{flex:1;margin-bottom:0}
+.status-line{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;background:var(--paper);border:2px solid var(--ink)}
+.status-line.ok{background:var(--green);color:var(--ink)}
+.status-line.err{background:var(--red);color:var(--paper)}
+.status-line.busy{background:var(--yellow);color:var(--ink)}
+.output{margin-top:18px;padding:16px;background:var(--ink);color:var(--paper);border:var(--border);font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;line-height:1.55;max-height:380px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.inbox-list{margin-top:18px;display:flex;flex-direction:column;gap:12px;max-height:380px;overflow:auto;padding-right:4px}
+.inbox-item{background:var(--paper);border:var(--border);box-shadow:var(--shadow-sm);padding:12px 14px;font-size:12px}
+.inbox-item .row{display:grid;grid-template-columns:70px 1fr;gap:8px;padding:2px 0}
+.inbox-item .k{font-weight:800;text-transform:uppercase;font-size:10px;letter-spacing:.08em;color:#555}
+.inbox-item .v{font-family:"JetBrains Mono",ui-monospace,monospace;word-break:break-all}
+.empty{font-size:12px;color:#666;font-style:italic}
+.footbar{display:flex;gap:18px;align-items:center;padding:14px 24px;border-top:var(--border);background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.foot-right{margin-left:auto;opacity:.6}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:2px solid var(--paper-2)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">P</span>
+    <span class="brand-name">PTERO<span class="brand-dot">/</span>CREATE</span>
+  </div>
+  <div class="topbar-meta">
+    <span id="quota-pill" class="pill">quota: —</span>
+    <button id="btn-refresh-quota" class="btn-mini">refresh</button>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="card card-form">
+    <h2 class="card-title">// NEW ACCOUNT</h2>
+    <form id="form-create" autocomplete="off">
+      <label class="field">
+        <span>USERNAME</span>
+        <input type="text" id="in-username" placeholder="auto / 3-16 chars" maxlength="16">
+      </label>
+      <label class="field">
+        <span>SERVER NODE</span>
+        <div class="segmented" id="seg-server">
+          <button type="button" data-val="server1" class="seg active">SERVER1</button>
+          <button type="button" data-val="server2" class="seg">SERVER2</button>
+          <button type="button" data-val="server3" class="seg">SERVER3</button>
+        </div>
+      </label>
+      <label class="field">
+        <span>RAM (GB) — 1..10</span>
+        <input type="number" id="in-ram" min="1" max="10" value="1">
+      </label>
+      <label class="check">
+        <input type="checkbox" id="in-force">
+        <span>force new session</span>
+      </label>
+      <button type="submit" id="btn-submit" class="btn-primary">CREATE →</button>
+    </form>
+  </section>
+
+  <section class="card card-output">
+    <div class="output-head">
+      <h2 class="card-title">// OUTPUT</h2>
+      <span id="status-line" class="status-line">idle</span>
+    </div>
+    <pre id="output" class="output">belum ada request.</pre>
+  </section>
+
+  <section class="card card-inbox">
+    <div class="output-head">
+      <h2 class="card-title">// INBOX</h2>
+      <button id="btn-inbox" class="btn-mini">fetch</button>
+    </div>
+    <div id="inbox-list" class="inbox-list">
+      <p class="empty">klik fetch untuk ambil daftar akun.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footbar">
+  <span>creator: Hanz Dev Official</span>
+  <span class="foot-right" id="foot-time">—</span>
+</footer>
+
+<script>
+const $=(s)=>document.querySelector(s);
+const state={server:"server1"};
+const HIDE_KEYS=["Creator","Saluran"];
+
+function strip(o){
+  if(Array.isArray(o))return o.map(strip);
+  if(o&&typeof o==="object"){
+    const c={};
+    for(const k of Object.keys(o)){
+      if(HIDE_KEYS.includes(k))continue;
+      c[k]=strip(o[k]);
+    }
+    return c;
+  }
+  return o;
+}
+
+function setStatus(t,c){const e=$("#status-line");e.textContent=t;e.className="status-line"+(c?" "+c:"")}
+function setOutput(o){$("#output").textContent=JSON.stringify(strip(o),null,2)}
+
+async function post(u,b){
+  const r=await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})});
+  return r.json();
+}
+
+$("#seg-server").addEventListener("click",(e)=>{
+  const b=e.target.closest(".seg");
+  if(!b)return;
+  document.querySelectorAll(".seg").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  state.server=b.dataset.val;
+});
+
+$("#form-create").addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  const btn=$("#btn-submit");
+  btn.disabled=true;
+  setStatus("running…","busy");
+  setOutput({status:"pending",note:"request in flight"});
+  try{
+    const p={
+      username:$("#in-username").value.trim()||"auto",
+      server:state.server,
+      ram:Number($("#in-ram").value)||1,
+      forceNew:$("#in-force").checked
+    };
+    const d=await post("/api/create",p);
+    setOutput(d);
+    setStatus(d.status?"success":"failed",d.status?"ok":"err");
+    refreshQuota();
+  }catch(err){
+    setOutput({status:false,error:err.message});
+    setStatus("error","err");
+  }finally{
+    btn.disabled=false;
+    $("#foot-time").textContent=new Date().toLocaleTimeString();
+  }
+});
+
+async function refreshQuota(){
+  try{
+    const d=await post("/api/quota",{});
+    if(d.status&&d.quota){
+      const r=d.quota.remaining??"?";
+      const m=d.quota.maximum??"?";
+      $("#quota-pill").textContent=`quota: ${r}/${m}`;
+    }else{
+      $("#quota-pill").textContent="quota: —";
+    }
+  }catch(_){
+    $("#quota-pill").textContent="quota: —";
+  }
+}
+$("#btn-refresh-quota").addEventListener("click",refreshQuota);
+
+$("#btn-inbox").addEventListener("click",async()=>{
+  const box=$("#inbox-list");
+  box.innerHTML='<p class="empty">loading…</p>';
+  try{
+    const d=await post("/api/inbox",{});
+    if(!d.status||!Array.isArray(d.accounts)||!d.accounts.length){
+      box.innerHTML='<p class="empty">tidak ada akun.</p>';
+      return;
+    }
+    box.innerHTML=d.accounts.map(renderItem).join("");
+  }catch(err){
+    box.innerHTML=`<p class="empty">error: ${err.message}</p>`;
+  }
+});
+
+function renderItem(a){
+  const rows=[
+    ["panel",a.domain?`https://${a.domain}`:"—"],
+    ["user",a.username||"—"],
+    ["pass",a.password||"—"],
+    ["server",a.serverName||"—"],
+    ["ram",a.ramGB?`${a.ramGB} GB`:"—"],
+    ["status",a.status||"—"],
+    ["created",a.createdAt||"—"]
+  ];
+  return `<div class="inbox-item">${rows.map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${esc(String(v))}</span></div>`).join("")}</div>`;
+}
+
+function esc(s){
+  return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+refreshQuota();
+</script>
+</body>
+</html>
